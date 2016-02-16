@@ -1,0 +1,6 @@
+#Composer Stuff.
+#Load it yourself by running `composer install`.
+vendor/
+
+#My thoughts and pastes that should not be published.
+drafts/
