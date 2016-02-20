@@ -1,0 +1,8 @@
+table {
+  width: 100%; }
+  table th {
+    width: 20%; }
+    table th.larger {
+      width: 30%; }
+
+/*# sourceMappingURL=style.css.map */

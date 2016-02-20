@@ -66,8 +66,9 @@ class Connection {
 			$event->setDtStart($section->from_time)
 				 ->setDtEnd($section->to_time)
 				 //->setUseTimezone(1)
-				 ->setSummary("🚄" . $section->trainnumber . ": ". $section->from_location
-				 	. " (pl. " . $section->from_platform . ") ➡️ " . $section->to_location . " (pl. " . $section->from_platform . ")")
+				 ->setSummary("🚄" . $section->trainnumber . ": ". $section->from_location .
+				 	((isset($section->from_platform)) ? " (pl. " . $section->from_platform . ")" : "") . "➡️ " . $section->to_location . " " .
+				 	((isset($section->to_platform)) ? " (pl. " . $section->to_platform . ")" : "") . ")")
 				 ->setDescription("All information is issued without liability. Subject to timetable changes. Please check the up-to-date timetable shortly before the travel date at www.bahn.de.");
 			$vCalender->addComponent($event);
 		}

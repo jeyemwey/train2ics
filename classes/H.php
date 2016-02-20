@@ -21,6 +21,7 @@ class H {
 	/**
 	 * Set TimezoneRules for Calendars to CEST/CET.
 	 * @param $calendar \Eluceo\iCal\Component\calendar Calendar to be timezoned. Ref Param.
+	 * @see Eluceo\iCal
 	 * @return void But $calendar is a reference parameter, so it will be changed.
 	 */
 	public static function CalendarSetTimeZones(&$calendar) {
@@ -70,5 +71,24 @@ class H {
 		}
 
 		return $newArray;
+	}
+
+	/**
+	 * Get Input from HTTP request.
+	 * Order:
+	 * 1) _POST
+	 * 2) _REQUEST
+	 * @param string $key
+	 * @param bool $onlyPost Shall I only look for post?
+	 * @param mixed $else. Default: Empty string.
+	 * @return Returns the value, else or empty string.
+	 */
+	public static function In($key, $onlyPost = FALSE, $else = "") {
+		$v = self::v($_POST[$key], $else);
+		if($v == $else AND !$onlyPost) {
+			$v = self::v($_REQUEST[$key], $else);
+		}
+
+		return $v;
 	}
 }

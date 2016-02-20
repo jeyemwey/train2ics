@@ -4,3 +4,6 @@ vendor/
 
 #My thoughts and pastes that should not be published.
 drafts/
+
+#SCSS
+*.css.map
