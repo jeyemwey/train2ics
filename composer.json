@@ -1,6 +1,7 @@
 {
     "require": {
-        "eluceo/ical": "^0.9.0"
+        "eluceo/ical": "^0.9.0",
+        "raveren/kint": "*"
     },
     "autoload": {
         "classmap": ["classes/"]

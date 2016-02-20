@@ -2,4 +2,4 @@
 
 include "vendor/autoload.php";
 
-new App;
+new jeyemwey\T2C\App;
