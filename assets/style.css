@@ -4,5 +4,7 @@ table {
     width: 20%; }
     table th.larger {
       width: 30%; }
+  table td {
+    padding-bottom: 1em; }
 
 /*# sourceMappingURL=style.css.map */

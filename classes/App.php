@@ -4,21 +4,32 @@ namespace jeyemwey\T2C;
 
 /**
  * Container for the whole application.
+ * It turned out this might be our Controller class as /index.php
+ * checks if $_GET["fn"] exists in here as a public method and runs it then.
+ * If it is not present, it will just run App::frontpage().
  */
 class App {
 	
 	/**
-	 * Build any Calendar Data from train data
+	 * Just render out the front page of the application. Default.
 	 * @return void
 	 */
-	public function getCalendarData() {
+	public function frontpage() {
+		include "views/index.php";
+	}
 
-		echo memory_get_usage() . "\n";
+	/** @var $connection Array<Connection> Return value of self::getConnectionsFromApiAndParseThem() */
+	public $connections = [];
 
-		$from = H::In("from");
-		$to = H::In("to");
-		$dt = new \DateTime(H::In("Date"));
-
+	/**
+	 * Get data from api and parse it into the objects.
+	 * @param $from string
+	 * @param $to string
+	 * @param $dt \DateTime
+	 * @return bool if it got results. Also $this->connections will be changed.
+	 */
+	private function getConnectionsFromAPIAndParseThem($from, $to, $dt) {
+		
 		// create curl resource 
 		$ch = curl_init(); 
 		// set url
@@ -32,22 +43,75 @@ class App {
 
 			$connections = json_decode($output);
 
-			$connections = array_map(function($json_connection) {
-				return new Connection($json_connection);
-			}, $connections->connections);
+			if (count($connections->connections)) {
 
-			$connections = H::MapByKey($connections, "UCID");
+				$connections = array_map(function($json_connection) {
+					return new Connection($json_connection);
+				}, $connections->connections);
 
-			\Kint::dump($connections);
-			echo memory_get_usage() . "\n";
-
-
-		} else {
-			//Handle Errors here
-		}
+				$this->connections = H::MapByKey($connections, "UCID");
+				return 1;
+			
+			} else {
+				return 0;
+			}
+		} else return 0;
 	}
 
-	public function frontpage() {
-		include "views/index.php";
+	/**
+	 * Get the connections.
+	 * Content-Type: json
+	 * @return void
+	 */
+	public function getConnections() {
+		$from = H::In("from");
+		$to = H::In("to");
+		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
+
+		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt);
+
+		array_map(function($conn) {
+			$conn->departureTime = $conn->sections[0]->from_time->format("d.m.Y H:i");
+			$conn->arrivalTime = end($conn->sections)->to_time->format("d.m.Y H:i");
+			$conn->usedTrains = "";
+			
+
+			for ($i=0; $i < count($conn->sections); $i++) { 
+				if ($i) $conn->usedTrains .= " ➡️ ";
+				$conn->usedTrains .= $conn->sections[$i]->trainnumber;
+			}
+
+			return $conn;
+
+		}, $this->connections);
+
+		header("Content-Type: application/json");
+		echo json_encode($this->connections);
+	}
+
+	/**
+	 * Get the calendar.
+	 * Content-Type: ics
+	 * @return void
+	 */
+	public function getCalendar() {
+		$from = H::In("from");
+		$to = H::In("to");
+		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
+
+		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt);
+
+		#\Kint::dump($this->connections);
+
+		$conn = H::v($this->connections[H::In("UCID")], 0);
+
+		if ($conn) {
+			header('Content-Type: text/calendar; charset=utf-8');
+			header('Content-Disposition: attachment; filename="' . $conn->usedTrains . '.ics"');
+
+			echo $conn->buildCalendar();
+		} else {
+			include "views/error.php";
+		}
 	}
 }

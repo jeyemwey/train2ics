@@ -21,6 +21,10 @@ class Connection {
 	/** @var $UCID string Unique Combined IDentifier */
 	public $UCID = "";
 
+
+	/** @var $usedTrains string */
+	public $usedTrains = "";
+
 	/**
 	 * Constructor
 	 * Maps all the API data to this object.
@@ -36,7 +40,6 @@ class Connection {
 		}, $json_connection->sections);
 
 		$this->UCID = $this->getUniqueTrainNumbers();
-		$this->Calendar = $this->buildCalendar();
 	}
 
 	/**
@@ -47,9 +50,9 @@ class Connection {
 	private function getUniqueTrainNumbers() {
 		$connectionHash = "";
 		foreach ($this->sections as $section) {
-			$connectionHash .= $section->trainnumber;
+			$this->usedTrains .= $section->trainnumber . " ";
 		}
-		return str_replace(' ', '', $connectionHash);
+		return str_replace(' ', '', $this->usedTrains);
 	}
 
 	/**
@@ -68,7 +71,7 @@ class Connection {
 				 //->setUseTimezone(1)
 				 ->setSummary("🚄" . $section->trainnumber . ": ". $section->from_location .
 				 	((isset($section->from_platform)) ? " (pl. " . $section->from_platform . ")" : "") . "➡️ " . $section->to_location . " " .
-				 	((isset($section->to_platform)) ? " (pl. " . $section->to_platform . ")" : "") . ")")
+				 	((isset($section->to_platform)) ? " (pl. " . $section->to_platform . ")" : ""))
 				 ->setDescription("All information is issued without liability. Subject to timetable changes. Please check the up-to-date timetable shortly before the travel date at www.bahn.de.");
 			$vCalender->addComponent($event);
 		}
