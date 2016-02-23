@@ -1,6 +1,6 @@
 <?php
 
-namespace jeyemwey\T2C;
+namespace jeyemwey\Train2ICS;
 
 /**
  * One part of a Connection. Basicly from getting into a train til getting of the train.
@@ -31,6 +31,11 @@ class Section {
 	public $to_location;
 
 	/**
+	 * @var $from_location_coords string Coords of the departure station according transport API
+	 */
+	public $from_location_coords;
+
+	/**
 	 * @var $from_platform string Which platform is the train going to departure from?
 	 */
 	public $from_platform;
@@ -54,6 +59,7 @@ class Section {
 
 		$this->from_time = new \DateTime("@" . H::v($json_section->departure->departureTimestamp));
 		$this->from_location = H::v($json_section->departure->station->name);
+		$this->from_location_coords = H::v($json_section->departure->station->coordinate->x) . ", " . H::v($json_section->departure->station->coordinate->y);
 		$this->from_platform = H::v($json_section->departure->platform, 1);
 
 		$this->to_time = new \DateTime("@" . H::v($json_section->arrival->arrivalTimestamp));

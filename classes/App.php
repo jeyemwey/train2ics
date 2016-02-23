@@ -1,6 +1,6 @@
 <?php
 
-namespace jeyemwey\T2C;
+namespace jeyemwey\Train2ICS;
 
 /**
  * Container for the whole application.
