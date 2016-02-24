@@ -7,4 +7,12 @@ table {
   table td {
     padding-bottom: 1em; }
 
+.serif {
+  font-family: Georgia, Times, serif; }
+
+.row-condensed .col-sm-7:first-child, .row-condensed .col-sm-5:first-child {
+  padding-right: 0; }
+.row-condensed .col-sm-7:last-child, .row-condensed .col-sm-5:last-child {
+  padding-left: 0; }
+
 /*# sourceMappingURL=style.css.map */

@@ -13,3 +13,20 @@ table {
 		padding-bottom: 1em;
 	}
 }
+
+.serif {
+	font-family: Georgia, Times, serif;
+}
+
+.row-condensed {
+	.col-sm-7, .col-sm-5 {
+
+		&:first-child {
+			padding-right: 0;
+		}
+
+		&:last-child {
+			padding-left: 0;
+		}
+	}
+}
