@@ -10,9 +10,11 @@ class H {
 
 	/**
 	 * Value function.
-	 * @param mixed $v The value
-	 * @param mixed $else An alternative. Default: Empty string.
-	 * @return the value or the $else value, depending of $v being set and !=0 in larger context.
+	 *
+	 * @param      mixed  $v      The value
+	 * @param      mixed  $else   An alternative. Default: Empty string.
+	 *
+	 * @return     the    value or the $else value, depending of $v being set and !=0 in larger context.
 	 */
 	public static function v(&$v, $else = "") {
 		return (isset($v) AND $v) ? $v : $else;
@@ -20,11 +22,15 @@ class H {
 
 	/**
 	 * Set TimezoneRules for Calendars to CEST/CET.
-	 * @param $calendar \Eluceo\iCal\Component\calendar Calendar to be timezoned. Ref Param.
-	 * @see Eluceo\iCal
-	 * @return void But $calendar is a reference parameter, so it will be changed.
+	 *
+	 * @param      \Eluceo\iCal\Component\calendar  $calendar  Calendar to be
+	 *                                                         timezoned. Ref
+	 *                                                         Param.
+	 * @see        Eluceo\iCal
+	 *
+	 * @return     void                             But $calendar is a reference parameter, so it will be changed.
 	 */
-	public static function CalendarSetTimeZones(&$calendar) {
+	public static function CalendarSetTimeZones(&$calendar): void {
 		$tz  = 'Europe/Berlin';
 		$dtz = new \DateTimeZone($tz);
 
@@ -59,11 +65,13 @@ class H {
 
 	/**
 	 * Key List<Obj> by Obj->$field
-	 * @param $list Array The list array
-	 * @param $field string The Identifier. Default: "id"
-	 * @return Array<string => <Obj>>
+	 *
+	 * @param      array         $list   The list array
+	 * @param      string        $field  The Identifier. Default: "id"
+	 *
+	 * @return     Array<string  => <Obj>>
 	 */
-	public static function MapByKey($list, $field = "id") {
+	public static function MapByKey($list, $field = "id"): array {
 		$newArray = array();
 
 		foreach ($list as $Instance) {
@@ -74,14 +82,13 @@ class H {
 	}
 
 	/**
-	 * Get Input from HTTP request.
-	 * Order:
-	 * 1) _POST
-	 * 2) _REQUEST
-	 * @param string $key
-	 * @param bool $onlyPost Shall I only look for post?
-	 * @param mixed $else. Default: Empty string.
-	 * @return Returns the value, else or empty string.
+	 * Get Input from HTTP request. Order: 1) _POST 2) _REQUEST
+	 *
+	 * @param      string  $key
+	 * @param      bool    $onlyPost  Shall I only look for post?
+	 * @param      mixed   $else      Default: Empty string.
+	 *
+	 * @return     mixed   Returns the value, else or empty string.
 	 */
 	public static function In($key, $onlyPost = FALSE, $else = "") {
 		$v = self::v($_POST[$key], $else);

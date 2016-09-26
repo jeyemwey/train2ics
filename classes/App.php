@@ -12,7 +12,8 @@ class App {
 	
 	/**
 	 * Just render out the front page of the application. Default.
-	 * @return void
+	 *
+	 * @return   
 	 */
 	public function frontpage() {
 		include "views/index.php";
@@ -23,23 +24,25 @@ class App {
 
 	/**
 	 * Get data from api and parse it into the objects.
-	 * @param $from string
-	 * @param $to string
-	 * @param $dt \DateTime
-	 * @return bool if it got results. Also $this->connections will be changed.
+	 *
+	 * @param      string     $from   The Origin
+	 * @param      string     $to     The Destination
+	 * @param      \DateTime  $dt     DateTime Object of start
+	 *
+	 * @return     bool       if it got results. Also $this->connections will be changed.
 	 */
-	private function getConnectionsFromAPIAndParseThem($from, $to, $dt) {
+	private function getConnectionsFromAPIAndParseThem($from, $to, $dt): bool {
 		
 		// create curl resource 
-		$ch = curl_init(); 
+		$ch = \curl_init(); 
 		// set url
-		curl_setopt($ch, CURLOPT_URL, "http://transport.opendata.ch/v1/connections?from=" . urlencode($from) . "&to=" . urlencode($to) . "&limit=6&date=" . $dt->format("Y-m-d") . "&time=" . $dt->format("H:i"));
+		\curl_setopt($ch, CURLOPT_URL, "http://transport.opendata.ch/v1/connections?from=" . urlencode($from) . "&to=" . urlencode($to) . "&limit=6&date=" . $dt->format("Y-m-d") . "&time=" . $dt->format("H:i"));
 		//return the transfer as a string
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		// $output contains the output string 
 		$output = curl_exec($ch);
 
-		if(!curl_errno($ch)) {
+		if(!\curl_errno($ch)) {
 
 			$connections = json_decode($output);
 
@@ -59,9 +62,9 @@ class App {
 	}
 
 	/**
-	 * Get the connections.
-	 * Content-Type: json
-	 * @return void
+	 * Get the connections. Content-Type: json
+	 *
+	 * @return   
 	 */
 	public function getConnections() {
 		$from = H::In("from");
@@ -90,9 +93,8 @@ class App {
 	}
 
 	/**
-	 * Get the calendar.
-	 * Content-Type: ics
-	 * @return void
+	 * Get the calendar. Content-Type: ics
+	 * @return   
 	 */
 	public function getCalendar() {
 		$from = H::In("from");
@@ -100,8 +102,6 @@ class App {
 		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
 
 		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt);
-
-		#\Kint::dump($this->connections);
 
 		$conn = H::v($this->connections[H::In("UCID")], 0);
 

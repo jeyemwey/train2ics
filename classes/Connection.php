@@ -47,7 +47,7 @@ class Connection {
 	 * Uses the train numbers to identify itsself.
 	 * @return string All the train numbers in one hash.
 	 */
-	private function getUniqueTrainNumbers() {
+	private function getUniqueTrainNumbers(): string {
 		$connectionHash = "";
 		foreach ($this->sections as $section) {
 			$this->usedTrains .= $section->trainnumber . " ";
@@ -60,7 +60,7 @@ class Connection {
 	 * @see Eluceo\iCal
 	 * @return string The rendered Calendar in ICS.
 	 */
-	public function buildCalendar() {
+	public function buildCalendar(): string {
 		$vCalender = new \Eluceo\iCal\Component\Calendar($this->UCID . $this->sections[0]->from_time->format("Ymd"));
 		#H::CalendarSetTimeZones($vCalender);
 

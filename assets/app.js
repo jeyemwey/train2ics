@@ -16,19 +16,6 @@ $(document).ready(function() {
     $('input[type="date"]').val(date);
     $('input[type="time"]').val(time);
 
-
-    //Piwik
-    var _paq = _paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-    var u="//piwik.iamjannik.me/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 6]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-
 });
 
 $('#from, #to').autocomplete({
@@ -55,9 +42,7 @@ var v = new Vue({
 });
 
 $("#updateTable").click(function() {
-    _paq.push(['trackEvent', 'GetConnections', 'From', $("input#from").val(), $("input#to").val()]);
-    _paq.push(['trackEvent', 'GetConnections', 'To', $("input#to").val(), $("input#to").val()]);
-
+    
     $.get("index.php",
         {fn: "getConnections",
          from: $("input#from").val(),

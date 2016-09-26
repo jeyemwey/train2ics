@@ -7,50 +7,51 @@ namespace jeyemwey\Train2ICS;
  */
 class Section {
 
-	/** @var $trainnumber string Number of the train. Unique for one day. */
+	/** @var        string  $trainnumber  Number of the train. Unique for one day. */
 	public $trainnumber;
 
-	/** @var $endOfTrain string What's the name of the station thats on the train? */
+	/** @var        string  $endOfTrain  What's the name of the station thats on the train? */
 	public $endOfTrain;
 
-	/** @var $operator string Railway Company ordered for that railway. */
+	/** @var        string  $operator  Railway Company ordered for that railway. */
 	public $operator;
 
 	/**
-	 * @var $from_time DateTime Dates of travel.
-	 * @var $to_time DateTime Dates of travel.
+	 * @var        DateTime  $from_time  Dates of travel.
+	 * @var        DateTime  $to_time    Dates of travel.
 	 */
 	public $from_time;
 	public $to_time;
 
 	/**
-	 * @var $from string Station name of departure
-	 * @var $to string Station name of arrival
+	 * @var        string  $from   Station name of departure
+	 * @var        string  $to     Station name of arrival
 	 */
 	public $from_location;
 	public $to_location;
 
 	/**
-	 * @var $from_location_coords string Coords of the departure station according transport API
+	 * @var        string  $from_location_coords  Coords of the departure station according transport API
 	 */
 	public $from_location_coords;
 
 	/**
-	 * @var $from_platform string Which platform is the train going to departure from?
+	 * @var        string  $from_platform  Which platform is the train going to departure from?
 	 */
 	public $from_platform;
 
 	/**
-	 * @var $to_platform string Which platform is the train going to arrive on?
+	 * @var        string  $to_platform  Which platform is the train going to arrive on?
 	 */
 	public $to_platform;
 
 	/**
-	 * Constructor
-	 * Maps all the API data to this object.
-	 * @ signs are required due to PHP's DateTime Compound notation. @see http://php.net/manual/de/datetime.formats.compound.php
-	 * @param $json_section StdClass API data.
-	 * @return void
+	 * Constructor Maps all the API data to this object. @ signs are required
+	 * due to PHP's DateTime Compound notation.
+	 * @see        http://php.net/manual/de/datetime.formats.compound.php
+	 *
+	 * @param      \StdClass  $json_section  API data.
+	 * @return     void
 	 */
 	public function __construct($json_section) {
 		$this->trainnumber = (string) H::v($json_section->journey->name);

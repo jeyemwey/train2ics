@@ -4,7 +4,8 @@ namespace jeyemwey\Train2ICS;
 
 include "vendor/autoload.php";
 
-$fn = H::v(H::In("fn"), "frontpage");
+$fn = H::In("fn");
+$fn = H::v($fn, "frontpage");
 
 if (!method_exists(new App, $fn)) {
 	$fn = "frontpage";
