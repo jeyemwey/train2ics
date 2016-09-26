@@ -23,18 +23,22 @@ class App {
 	/**
 	 * Get data from api and parse it into the objects.
 	 *
-	 * @param      string     $from   The Origin
-	 * @param      string     $to     The Destination
-	 * @param      \DateTime  $dt     DateTime Object of start
+	 * @param      string     $from              The Origin
+	 * @param      string     $to                The Destination
+	 * @param      \DateTime  $dt                DateTime Object of start
+	 * @param      array      $transportMethods  The transport methods of your choice
 	 *
 	 * @return     bool       if it got results. Also $this->connections will be changed.
 	 */
-	private function getConnectionsFromAPIAndParseThem($from, $to, $dt): bool {
-		
+	private function getConnectionsFromAPIAndParseThem($from, $to, $dt, $transportMethods): bool {
+
+		$transportMethods = "&transportations[]=" . implode("&transportations[]=", $transportMethods);
+		$url = "http://transport.opendata.ch/v1/connections?from=" . urlencode($from) . "&to=" . urlencode($to) . "&limit=6&date=" . $dt->format("Y-m-d") . "&time=" . $dt->format("H:i") . $transportMethods;
+
 		// create curl resource 
 		$ch = \curl_init(); 
 		// set url
-		\curl_setopt($ch, CURLOPT_URL, "http://transport.opendata.ch/v1/connections?from=" . urlencode($from) . "&to=" . urlencode($to) . "&limit=6&date=" . $dt->format("Y-m-d") . "&time=" . $dt->format("H:i"));
+		\curl_setopt($ch, CURLOPT_URL, $url);
 		//return the transfer as a string
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		// $output contains the output string 
@@ -66,8 +70,9 @@ class App {
 		$from = H::In("from");
 		$to = H::In("to");
 		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
+		$transportMethods = H::In("transportations", array());
 
-		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt);
+		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt, $transportMethods);
 
 		array_map(function($conn) {
 			$conn->departureTime = $conn->sections[0]->from_time->format("d.m.Y H:i");

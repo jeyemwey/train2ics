@@ -48,12 +48,21 @@ var v = new Vue({
 
 $("#updateTable").click(function() {
     
+    function getTransportMethods() {
+        var ret = [];
+        $("input[name='transportations[]']:checked").each(function() {
+            ret.push($(this).val());
+        });
+        return ret;
+    }
+
     $.get("index.php",
         {fn: "getConnections",
          from: $("input#from").val(),
          to: $("input#to").val(),
          departureDate: $("input#departureDate").val(),
-         departureTime: $("input#departureTime").val()
+         departureTime: $("input#departureTime").val(),
+         "transportations[]": getTransportMethods()
      },
      function(data) {
         v.$set("connections", data);
