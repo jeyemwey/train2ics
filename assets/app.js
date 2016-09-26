@@ -34,6 +34,11 @@ $('#from, #to').autocomplete({
     }
 });
 
+$("#regOnly").click(function() {
+    $("input[data-localTrain='false']").prop("checked", false);
+    $("input[data-localTrain='true']").prop("checked", true);
+});
+
 var v = new Vue({
     el: '#app',
     data: {

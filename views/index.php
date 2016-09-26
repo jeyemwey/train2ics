@@ -14,13 +14,37 @@
     					<label for="to">Arrival:</label>&nbsp;<input class="form-control" type="text" id="to" name="to" value="Berlin Gesundbrunnen" />
     				</div>
 
-    				<div class="form-group row row-condensed">
+    				<div class="form-group row">
     					<div class="col-sm-7">
     						<label for="departureDate">Departure Date:</label>&nbsp;<input class="form-control" type="date" id="departureDate" name="departureDate" />
     					</div>
     					<div class="col-sm-5">
     						<label for="departureTime">Time</label>&nbsp;<input class="form-control" type="time" id="departureTime" name="departureTime" />
     					</div>
+    				</div>
+    				<div class="form-group row">
+    					<div class="col-sm-5">
+	    					<label for="transportations">Transportation Methods:</label>
+							<input type="button" class="btn btn-grey" id="regOnly" value="Regio Only" />
+						</div>
+						<div class="col-sm-7">
+							<div class="row">
+		    					<div class="col-xs-6 col-md-12">
+			    					<input type="checkbox" name="transportations[]" id="ice_tgv_rj" value="ice_tgv_rj"  data-localTrain="false" checked /><label for="ice_tgv_rj">ICE/TGV/RJ</label><br />
+									<input type="checkbox" name="transportations[]" id="ec_ic" value="ec_ic"  data-localTrain="false" checked /><label for="ec_ic">IC/EC</label><br />
+									<input type="checkbox" name="transportations[]" id="ir" value="ir"  data-localTrain="false" checked /><label for="ir">InterRegio</label><br />
+									<input type="checkbox" name="transportations[]" id="re_d" value="re_d"  data-localTrain="true" checked /><label for="re_d">Regio</label><br />
+									<input type="checkbox" name="transportations[]" id="ship" value="ship"  data-localTrain="true" /><label for="ship">Ferry</label><br />
+								</div>
+		    					<div class="col-xs-6 col-md-12">
+									<input type="checkbox" name="transportations[]" id="s_sn_r" value="s_sn_r"  data-localTrain="true" checked /><label for="s_sn_r">S/SN/R</label><br />
+									<input type="checkbox" name="transportations[]" id="bus" value="bus"  data-localTrain="true" /><label for="bus">Bus</label><br />
+									<input type="checkbox" name="transportations[]" id="cableway" value="cableway"  data-localTrain="true" checked /><label for="cableway">Cableway</label><br />
+									<input type="checkbox" name="transportations[]" id="arz_ext" value="arz_ext"  data-localTrain="true" checked /><label for="arz_ext">ARZ/EXT</label><br />
+									<input type="checkbox" name="transportations[]" id="tramway_underground" value="tramway_underground"  data-localTrain="true" /><label for="tramway_underground">Tram/U</label><br />
+								</div>
+							</div>
+						</div>
     				</div>
     				<div class="form-group">
     					<input type="button" class="btn btn-success" id="updateTable" value="Get Trains" />

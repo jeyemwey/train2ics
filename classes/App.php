@@ -12,8 +12,6 @@ class App {
 	
 	/**
 	 * Just render out the front page of the application. Default.
-	 *
-	 * @return   
 	 */
 	public function frontpage() {
 		include "views/index.php";
@@ -63,8 +61,6 @@ class App {
 
 	/**
 	 * Get the connections. Content-Type: json
-	 *
-	 * @return   
 	 */
 	public function getConnections() {
 		$from = H::In("from");
@@ -94,7 +90,6 @@ class App {
 
 	/**
 	 * Get the calendar. Content-Type: ics
-	 * @return   
 	 */
 	public function getCalendar() {
 		$from = H::In("from");
