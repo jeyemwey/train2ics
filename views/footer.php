@@ -8,10 +8,10 @@
 				</div>
 			</footer>
 		</div>	
-        <script src="assets/lib/jquery.min.js"></script>
-        <script src="assets/lib/jquery-ui.min.js"></script>
-        <script src="assets/lib/vue.js"></script>
-        <script src="assets/lib/bootstrap.min.js"></script>
-        <script src="assets/app.js"></script>
-    </body>
+		<script src="assets/lib/jquery.min.js"></script>
+		<script src="assets/lib/jquery-ui.min.js"></script>
+		<script src="assets/lib/vue.js"></script>
+		<script src="assets/lib/bootstrap.min.js"></script>
+		<script src="assets/app.js"></script>
+	</body>
 </html>

@@ -47,11 +47,15 @@ var v = new Vue({
 });
 
 $("#updateTable").click(function() {
+    _paq.push(['trackEvent', 'GetConnections', 'From', $("input#from").val(), $("input#to").val()]);
+    _paq.push(['trackEvent', 'GetConnections', 'To', $("input#to").val(), $("input#to").val()]);    
     
     function getTransportMethods() {
         var ret = [];
         $("input[name='transportations[]']:checked").each(function() {
             ret.push($(this).val());
+
+            _paq.push(['trackEvent', 'GetConnections', 'UsedTransportMethod', $(this).val().toUpperCase()]);
         });
         return ret;
     }
