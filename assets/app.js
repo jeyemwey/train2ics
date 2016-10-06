@@ -34,6 +34,11 @@ $('#from, #to').autocomplete({
     }
 });
 
+$("#regOnly").click(function() {
+    $("input[data-localTrain='false']").prop("checked", false);
+    $("input[data-localTrain='true']").prop("checked", true);
+});
+
 var v = new Vue({
     el: '#app',
     data: {
@@ -42,13 +47,26 @@ var v = new Vue({
 });
 
 $("#updateTable").click(function() {
+    _paq.push(['trackEvent', 'GetConnections', 'From', $("input#from").val(), $("input#to").val()]);
+    _paq.push(['trackEvent', 'GetConnections', 'To', $("input#to").val(), $("input#to").val()]);    
     
+    function getTransportMethods() {
+        var ret = [];
+        $("input[name='transportations[]']:checked").each(function() {
+            ret.push($(this).val());
+
+            _paq.push(['trackEvent', 'GetConnections', 'UsedTransportMethod', $(this).val().toUpperCase()]);
+        });
+        return ret;
+    }
+
     $.get("index.php",
         {fn: "getConnections",
          from: $("input#from").val(),
          to: $("input#to").val(),
          departureDate: $("input#departureDate").val(),
-         departureTime: $("input#departureTime").val()
+         departureTime: $("input#departureTime").val(),
+         "transportations[]": getTransportMethods()
      },
      function(data) {
         v.$set("connections", data);

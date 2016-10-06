@@ -5,7 +5,7 @@
 				<hr />
 				<div class="alert alert-warning">Something went wrong finding your train. I am very sorry. Please send me an email so I can find out what went wrong.</div>
 			</div></div>
-            <div class="row"><div class="col-md-12">
-                <a href="index.php">&larr; Try again</a>
-            </div></div>
+			<div class="row"><div class="col-md-12">
+				<a href="index.php">&larr; Try again</a>
+			</div></div>
 <?php include "footer.php" ?>
