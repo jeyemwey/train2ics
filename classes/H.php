@@ -98,4 +98,16 @@ class H {
 
 		return $v;
 	}
+
+	/**
+	 * Creates a GET param from an ListArray
+	 *
+	 * @param      array<string>  $list       The list
+	 * @param      string         $paramName  The GET parameter name
+	 *
+	 * @return     string
+	 */
+	public static function CreateParamList($list, $paramName) {
+		return "&" . $paramName . "[]=" . implode("&" . $paramName . "[]=", $list);
+	}
 }

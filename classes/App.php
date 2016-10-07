@@ -32,7 +32,7 @@ class App {
 	 */
 	private function getConnectionsFromAPIAndParseThem($from, $to, $dt, $transportMethods): bool {
 
-		$transportMethods = "&transportations[]=" . implode("&transportations[]=", $transportMethods);
+		$transportMethods = H::CreateParamList($transportMethods, "transportations");
 		$url = "http://transport.opendata.ch/v1/connections?from=" . urlencode($from) . "&to=" . urlencode($to) . "&limit=6&date=" . $dt->format("Y-m-d") . "&time=" . $dt->format("H:i") . $transportMethods;
 
 		// create curl resource 
@@ -63,6 +63,8 @@ class App {
 		} else return 0;
 	}
 
+	private static $transportMethods = "";
+
 	/**
 	 * Get the connections. Content-Type: json
 	 */
@@ -70,9 +72,9 @@ class App {
 		$from = H::In("from");
 		$to = H::In("to");
 		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
-		$transportMethods = H::In("transportations", array());
+		App::$transportMethods = H::In("transportations", array());
 
-		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt, $transportMethods);
+		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt, App::$transportMethods);
 
 		array_map(function($conn) {
 			$conn->departureTime = $conn->sections[0]->from_time->format("d.m.Y H:i");
@@ -85,6 +87,7 @@ class App {
 				$conn->usedTrains .= $conn->sections[$i]->trainnumber;
 			}
 
+			$conn->transportMethods = H::CreateParamList(App::$transportMethods, "transportations");
 			return $conn;
 
 		}, $this->connections);
@@ -100,8 +103,9 @@ class App {
 		$from = H::In("from");
 		$to = H::In("to");
 		$dt = new \DateTime(H::In("departureDate") . " " . H::In("departureTime"));
+		$transportMethods = H::In("transportations", array());
 
-		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt);
+		$this->getConnectionsFromAPIAndParseThem($from, $to, $dt, $transportMethods);
 
 		$conn = H::v($this->connections[H::In("UCID")], 0);
 

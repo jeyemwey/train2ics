@@ -69,6 +69,7 @@ $("#updateTable").click(function() {
          "transportations[]": getTransportMethods()
      },
      function(data) {
+        console.log(data);
         v.$set("connections", data);
      },
      "json"

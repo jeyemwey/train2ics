@@ -25,6 +25,7 @@ class Connection {
 	/** @var $usedTrains string */
 	public $usedTrains = "";
 
+
 	/**
 	 * Constructor
 	 * Maps all the API data to this object.

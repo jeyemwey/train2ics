@@ -66,7 +66,7 @@
 								<td>{{ connection.departureTime }}</td>
 								<td>{{ connection.usedTrains }}</td>
 								<td>{{ connection.arrivalTime }}</td>
-								<td><a href="?fn=getCalendar&from={{ connection.from_location }}&to={{ connection.to_location }}&departureTime={{ connection.departureTime }}&UCID={{ connection.UCID }}"
+								<td><a href="?fn=getCalendar&from={{ connection.from_location }}&to={{ connection.to_location }}&departureTime={{ connection.departureTime }}&UCID={{ connection.UCID }}{{ connection.transportMethods }}"
 									class="btn btn-primary"
 									data-from="{{ connection.from_location }}"
 									data-to="{{ connection.to_location }}"
