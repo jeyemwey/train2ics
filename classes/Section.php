@@ -61,10 +61,10 @@ class Section {
 		$this->from_time = new \DateTime("@" . H::v($json_section->departure->departureTimestamp));
 		$this->from_location = H::v($json_section->departure->station->name);
 		$this->from_location_coords = H::v($json_section->departure->station->coordinate->x) . ", " . H::v($json_section->departure->station->coordinate->y);
-		$this->from_platform = H::v($json_section->departure->platform, 1);
+		$this->from_platform = H::v($json_section->departure->platform, "");
 
 		$this->to_time = new \DateTime("@" . H::v($json_section->arrival->arrivalTimestamp));
 		$this->to_location = H::v($json_section->arrival->station->name);
-		$this->to_platform = H::v($json_section->arrival->platform, "XXX");
+		$this->to_platform = H::v($json_section->arrival->platform, "");
 	}
 }

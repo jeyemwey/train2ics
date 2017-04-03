@@ -39,6 +39,7 @@ class App {
 		$ch = \curl_init(); 
 		// set url
 		\curl_setopt($ch, CURLOPT_URL, $url);
+//echo $url . PHP_EOL;
 		//return the transfer as a string
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		// $output contains the output string 
@@ -56,7 +57,6 @@ class App {
 
 				$this->connections = H::MapByKey($connections, "UCID");
 				return 1;
-			
 			} else {
 				return 0;
 			}
@@ -80,12 +80,20 @@ class App {
 			$conn->departureTime = $conn->sections[0]->from_time->format("d.m.Y H:i");
 			$conn->arrivalTime = end($conn->sections)->to_time->format("d.m.Y H:i");
 			$conn->usedTrains = "";
-			
 
-			for ($i=0; $i < count($conn->sections); $i++) { 
+			//remove "Walk" sections as they contain the transitions at the stations.
+			$conn->sections = array_filter($conn->sections, function($sec) {
+				return !($sec->from_location == $sec->to_location);
+			});
+
+			for ($i=0; $i < count($conn->sections); $i++) {
 				if ($i) $conn->usedTrains .= " ➡️ ";
 				$conn->usedTrains .= $conn->sections[$i]->trainnumber;
 			}
+			//Remove double arrwos
+			$conn->usedTrains = str_replace("➡️  ➡️ ", "➡️ ", $conn->usedTrains);
+			//Remove arrow at the end
+			$conn->usedTrains = preg_replace("/\W➡️\W$/", "", $conn->usedTrains);
 
 			$conn->transportMethods = H::CreateParamList(App::$transportMethods, "transportations");
 			return $conn;
